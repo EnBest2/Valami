@@ -1,0 +1,76 @@
+/* Mobil nézet */
+@media (max-width: 768px) {
+    .node {
+        min-width: 120px;
+        min-height: 80px;
+        font-size: 14px;
+    }
+    
+    .node-title {
+        font-size: 16px;
+    }
+    
+    .context-menu {
+        width: 180px;
+        font-size: 14px;
+    }
+    
+    .node-editor {
+        width: 90vw;
+        left: 5vw;
+    }
+    
+    .node-input, .node-textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Touch bar */
+    .touch-toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(26, 26, 46, 0.9);
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+    
+    .touch-toolbar button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+}
+
+/* iOS prompt */
+.ios-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: #16213e;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    z-index: 2000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.ios-prompt button {
+    background: #4ECDC4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none !important;
+}
