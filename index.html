@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NeuroMind">
+    <title>NeuroMind - Gondolat Térkép</title>
+    <link rel="stylesheet" href="mindmap.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <style>
+        /* iOS specific adjustments */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            .app-container {
+                height: 100vh !important;
+                max-height: -webkit-fill-available;
+            }
+        }
+        
+        /* Prevent zoom on input */
+        input, textarea, select {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Tartalom ugyanaz mint előzőleg -->
+    </div>
+
+    <!-- iOS PWA install prompt -->
+    <div id="install-prompt" class="ios-prompt hidden">
+        <div class="prompt-content">
+            <p>Telepítsd a főképernyőre az appot!</p>
+            <p>Koppints a megosztás gombra <span style="font-size:1.5em">↑</span>, majd válaszd a "Kezdőképernyőre" lehetőséget.</p>
+            <button id="close-prompt">Értettem</button>
+        </div>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="menu.js"></script>
+    <script src="mindmap.js"></script>
+    <script>
+        // PWA Service Worker regisztráció
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker regisztráció sikeres');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker regisztráció sikertelen: ', err);
+                    });
+            });
+        }
+
+        // iOS install prompt megjelenítése
+        function showIosInstallPrompt() {
+            const isIos = () => {
+                const userAgent = window.navigator.userAgent.toLowerCase();
+                return /iphone|ipad|ipod/.test(userAgent);
+            };
+            
+            const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+            
+            if (isIos() && !isInStandaloneMode()) {
+                setTimeout(() => {
+                    document.getElementById('install-prompt').classList.remove('hidden');
+                }, 3000);
+            }
+        }
+
+        document.getElementById('close-prompt').addEventListener('click', () => {
+            document.getElementById('install-prompt').classList.add('hidden');
+        });
+
+        window.addEventListener('load', showIosInstallPrompt);
+    </script>
+</body>
+</html>
